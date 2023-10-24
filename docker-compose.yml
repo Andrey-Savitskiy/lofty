@@ -1,0 +1,52 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    container_name: ${POSTGRES_HOST}
+    links:
+      - helper_web
+    env_file:
+      - .env
+
+  rabbitmq:
+    image: rabbitmq
+    hostname: rabbitmq
+    restart: always
+
+  save_to_db_queue:
+    build:
+      context: .
+      dockerfile: save_to_db/Dockerfile
+    image: save_to_db_queue
+    container_name: save_to_db_queue
+    env_file:
+      - .env
+    restart: always
+    links:
+      - postgres
+    working_dir: /save_to_db
+
+  parser_queue:
+    build:
+      context: .
+      dockerfile: parser/Dockerfile
+    image: parser_queue
+    container_name: parser_queue
+    env_file:
+      - .env
+    restart: always
+    working_dir: /parser
+
+  file_parser:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: file_parser
+    container_name: file_parser
+    env_file:
+      - .env
+    restart: always
+    working_dir: /

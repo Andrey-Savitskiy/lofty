@@ -1,0 +1,13 @@
+import os
+
+
+DB_USER = os.getenv('POSTGRES_USER')
+DB_PASS = os.getenv('POSTGRES_PASSWORD')
+DB_HOST = os.getenv('POSTGRES_HOST')
+DB_NAME = os.getenv('POSTGRES_DB')
+
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST')
+
+CHROME_DRIVER_PATH = os.getenv('CHROME_DRIVER_PATH')
+
+INPUT_FILE_NAME = os.getenv('INPUT_FILE_NAME')
